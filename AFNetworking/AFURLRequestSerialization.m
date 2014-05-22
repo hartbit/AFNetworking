@@ -192,7 +192,6 @@ NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
     self.HTTPShouldHandleCookies = YES;
     self.HTTPShouldUsePipelining = NO;
     self.networkServiceType = NSURLNetworkServiceTypeDefault;
-    self.timeoutInterval = 60;
 
     self.mutableHTTPRequestHeaders = [NSMutableDictionary dictionary];
 
@@ -293,7 +292,10 @@ NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
     mutableRequest.HTTPShouldHandleCookies = self.HTTPShouldHandleCookies;
     mutableRequest.HTTPShouldUsePipelining = self.HTTPShouldUsePipelining;
     mutableRequest.networkServiceType = self.networkServiceType;
-    mutableRequest.timeoutInterval = self.timeoutInterval;
+	
+	if (self.timeoutInterval) {
+	    mutableRequest.timeoutInterval = [self.timeoutInterval doubleValue];
+	}
 
     mutableRequest = [[self requestBySerializingRequest:mutableRequest withParameters:parameters error:error] mutableCopy];
 
